@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dao.SpeakerMapper">
+    <!--作用是告诉mybatis框架，实体中的哪个属性和数据库中的哪个字段是照应的-->
+    <!--如果数据库中的某些字段和实体中的某些字段不一致，是否可以不写一致的字段，只写不一致的字段呢？-->
+    <resultMap id="speakerMap" type="speaker">
+        <id property="id" column="id"/><!--主键-->
+        <result property="speakerName" column="speaker_name" />
+        <result property="speakerDesc" column="speaker_desc"/>
+        <result property="headImgUrl" column="head_img_url"/>
+        <result property="speakerJob" column="speaker_job"/>
+    </resultMap>
+    <insert id="insertSpeaker" parameterType="speaker">
+        INSERT INTO speaker(id,speaker_name,speaker_desc,speaker_job,head_img_url)
+        VALUES (NULL ,#{speakerName},#{speakerDesc},#{speakerJob},#{headImgUrl})
+    </insert>
+    <update id="updateSpeaker" parameterType="speaker">
+        UPDATE   speaker SET speaker_name=#{speakerName},speaker_desc=#{speakerDesc},
+        speaker_job=#{speakerJob},head_img_url=#{headImgUrl} where id = #{id}
+    </update>
+    <select id="selectAllSpeaker"  resultMap="speakerMap">
+         select *  from speaker
+    </select>
+    <select id="findSpeakerById" resultMap="speakerMap" parameterType="int">
+        SELECT * FROM speaker WHERE id=#{id}
+    </select>
+    <delete id="deleteSpeakerById" parameterType="int" >
+        DELETE FROM speaker WHERE id=#{id}
+    </delete>
+
+</mapper>
